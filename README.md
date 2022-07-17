@@ -9,7 +9,7 @@ The Unscramble.py script in the oldVersions folder is the first version of this 
 In this older version, the script was only meant to find words that perfectly matched with the set of letters given
 An example would be entering LIVE and getting back EVIL, LIVE LEVI, VEIL, and VILE.
 
-#Methodology
+# Methodology
 
 This summer I decided to expand upon this project so that it could also return words that only use a subset of the letter provided
 An example would be entering LIVE and getting back IVE, LIE, VIE, EVIL, LEVI, LIVE, VEIL, and VILE. This was achieved by reorganizing the list of words
@@ -20,7 +20,7 @@ the value of that key. Setting the keys are the alphabetized letters reduces the
 (LIVE, EVIL, ect) into a single key. This also means user input that searches for keys can be easily alphabetized to search for results. Next, I'll cover
 more of the developement process.
 
-#V1
+# V1
 
 First, I made two scripts to reorganize the words in English_language_words.txt so that they are organized by length and then in alphabetical order.
 'sortByLength.py' is one of the two scripts I made to organize and rewrite the dictionary. 'sorted_length.txt' and 'sorted_lengthb.txt' are the
@@ -30,7 +30,7 @@ recreated the dictionary from the organized file and created 'dicionary.json' fr
 but I have left them seperate as on occasion I have found there to be missing words in the dictionary, and rather than having to wait for 'organized.py' to execute
 I can manually change the 'oranized.txt' files and update the 'dictionary.json' file with 'make_dicionary.py' within seconds.
 
-#V2
+# V2
 
 The current version of the project is in 'organized2.py' and 'unscrambled2.py'. This is a rework of 'organized.py' that is much easier to read in addition to 
 being sigificantly faster. This doesn't improve the performance of 'unscrambled2.py' nor does it improve the performance of how my website executes the script,
