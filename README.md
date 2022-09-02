@@ -32,6 +32,10 @@ I can manually change the 'oranized.txt' files and update the 'dictionary.json' 
 
 # V2
 
-The current version of the project is in 'organized2.py' and 'unscrambled2.py'. This is a rework of 'organized.py' that is much easier to read in addition to 
+This version of the project is in 'organized2.py' and 'unscrambled2.py'. This is a rework of 'organized.py' that is much easier to read in addition to 
 being sigificantly faster. This doesn't improve the performance of 'unscrambled2.py' nor does it improve the performance of how my website executes the script,
 but it does serve as practice for making code that's easier to read and performs well.
+
+# V3
+
+I'm not sure how, but I didn't notice that the previous versions of my program had a huge flaw which was that queries competely relied on my dictionary which only had keys made from english words. This meant that queries like 'beanz' would not return any words because beanz isn't a real word and no other english words when alphabetized become 'abenz'. The lastest version of my project now includes functions to first search the dictionary, then add it as a key if it isn't found. Initially I only added keys if a word could be made with them, but I realized this meant that every time those keys were queries my server would have to perform 58,000 operations when I could just do those once. I was worreid about the size of the dictionary with so many empty keys but I think the reduction is operations is well worth the potential bloat.
