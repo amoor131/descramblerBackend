@@ -11,6 +11,17 @@
 #
 
 import json
+from pprint import pprint
+
+def printQuery(foundWords):
+    foundWords = foundWords.split()
+    list = ""
+    for word in foundWords:
+        if len(list) + len(word) + 1 <= 80:
+            list += word + " "
+        else:
+            print(list)
+            list = ""
 
 def fitsIn(testWord, keyWord):
     comp = list(keyWord)
@@ -25,14 +36,14 @@ def fitsIn(testWord, keyWord):
         return True
 
 def addKey(testKey,dict):
-    print(f"testing key: {testKey}")
+    #print(f"testing key: {testKey}")
     #used to add new lines to f statements
     new_line = '\n'
     #check that the entry is only letters
     if testKey.isalpha() == False:
         return -1
     #double check that the user input isn't already a key in the database
-    if testKey in descrambler.keys():
+    if testKey in dict.keys():
         return 0
     #user input in reverse alphabetical order, 
     sortedKey = ''.join(sorted(testKey.strip('\n')))
@@ -55,7 +66,7 @@ def main():
     
     #print("==============start==============") #DEBUG PRINT
     with open("dictionary.json","r") as dictionary:
-        dict = json.loads(dictionary)
+        dict = json.load(dictionary)
         #DEBUG PRINT
         #print(f"dictionary length: {len(dict)}")
         query = "a" #init value arbitrary
@@ -67,16 +78,16 @@ def main():
             #print(f"orderedQuery = {orderedQuery}") #DEBUG PRINT
             #print(f"{dict.keys()}")
             if orderedQuery in dict.keys():
-                    print(f"{dict[orderedQuery]}")
+                    printQuery(dict[orderedQuery])
             else:
                 tryAddKey = addKey(orderedQuery,dict)
                 match tryAddKey:
                     case 1:
-                        print(f"{dict[orderedQuery]}")
+                        printQuery(dict[orderedQuery])
                     case 0:
-                        print(f"*{dict[orderedQuery]}")
+                        printQuery(dict[orderedQuery])
                     case -1:
-                        print(f"tried adding key {orderedQuery} but it contains non alphabet characters")
+                        print(f"tried adding key {orderedQuery} but it contains non alphabet characters{new_line}")
                 #print(f"No words can be made from {query}")
             print(f"Enter another set to test for or enter q to quit")
     #print("===============end===============") #DEBUG PRINT
