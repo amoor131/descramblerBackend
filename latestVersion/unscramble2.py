@@ -24,7 +24,7 @@ def fitsIn(testWord, keyWord):
         #only returns true if all letters were found in keyWord
         return True
 
-def addKey(testKey):
+def addKey(testKey,dict):
     print(f"testing key: {testKey}")
     #used to add new lines to f statements
     new_line = '\n'
@@ -42,9 +42,10 @@ def addKey(testKey):
             if fitsIn(word, testKey):
                 foundWords += ' ' + ''.join(word.strip('\n')) # not sure if I need to strip new line
         if len(foundWords) > 0:
-            entry = Sort(key=testKey, words=foundWords)
-            db.session.add(entry)
-            db.session.commit()
+            #dict[sortedKey] = foundWords
+            newKey = {sortedKey: foundWords}
+            dict.update(newKey)
+            #json.dump(dict,dictionary)
             return 1
 
 def main():
@@ -54,7 +55,7 @@ def main():
     
     #print("==============start==============") #DEBUG PRINT
     with open("dictionary.json","r") as dictionary:
-        dict = json.load(dictionary)
+        dict = json.loads(dictionary)
         #DEBUG PRINT
         #print(f"dictionary length: {len(dict)}")
         query = "a" #init value arbitrary
@@ -68,14 +69,14 @@ def main():
             if orderedQuery in dict.keys():
                     print(f"{dict[orderedQuery]}")
             else:
-                tryAddKey = addKey(letterSet)
+                tryAddKey = addKey(orderedQuery,dict)
                 match tryAddKey:
                     case 1:
-                        print(f"tried adding key {letterSet} but it already existed")
+                        print(f"{dict[orderedQuery]}")
                     case 0:
-                        print(f"tried adding key {letterSet} but it already existed")
+                        print(f"*{dict[orderedQuery]}")
                     case -1:
-                        print(f"tried adding key {letterSet} but it contains non alphabet characters")
+                        print(f"tried adding key {orderedQuery} but it contains non alphabet characters")
                 #print(f"No words can be made from {query}")
             print(f"Enter another set to test for or enter q to quit")
     #print("===============end===============") #DEBUG PRINT
