@@ -36,7 +36,6 @@ def fitsIn(testWord, keyWord):
         return True
 
 def addKey(testKey,dict):
-    #print(f"testing key: {testKey}")
     #used to add new lines to f statements
     new_line = '\n'
     #check that the entry is only letters
@@ -52,13 +51,12 @@ def addKey(testKey,dict):
         for word in engWords:
             if fitsIn(word, testKey):
                 foundWords += ' ' + ''.join(word.strip('\n')) # not sure if I need to strip new line
+        newKey = {sortedKey: foundWords}
+        dict.update(newKey)
         if len(foundWords) > 0:
-            #dict[sortedKey] = foundWords
-            newKey = {sortedKey: foundWords}
-            dict.update(newKey)
-            #json.dump(dict,dictionary)
             return 1
-
+        else:
+            return 2
 def main():
     dict = {}
     new_line = '\n'
@@ -67,8 +65,6 @@ def main():
     #print("==============start==============") #DEBUG PRINT
     with open("dictionary.json","r") as dictionary:
         dict = json.load(dictionary)
-        #DEBUG PRINT
-        #print(f"dictionary length: {len(dict)}")
         query = "a" #init value arbitrary
         #DEBUG PRINT
         print("see what words you can make with any set of letters!")
@@ -76,20 +72,30 @@ def main():
             query = input()
             orderedQuery = ''.join(sorted(query)).upper() #.strip('\n')
             #print(f"orderedQuery = {orderedQuery}") #DEBUG PRINT
-            #print(f"{dict.keys()}")
             if orderedQuery in dict.keys():
-                    printQuery(dict[orderedQuery])
+                if len(dict[orderedQuery]) > 0:
+                    print(f"!{dict[orderedQuery]}{new_line}")
+                    #printQuery(f"!{dict[orderedQuery]}{new_line}")
+                else:
+                    print(f"*no words can be made from {query}{new_line}")
             else:
                 tryAddKey = addKey(orderedQuery,dict)
                 match tryAddKey:
+                    case 2:
+                        #
+                        print(f"no words can be made from {query}{new_line}")
                     case 1:
-                        printQuery(dict[orderedQuery])
+                        #
+                        print(f"1{dict[orderedQuery]}{new_line}")#DEBUG
+                        #printQuery(f"1{dict[orderedQuery]}{new_line}")
                     case 0:
-                        printQuery(dict[orderedQuery])
+                        #
+                        print(f"1{dict[orderedQuery]}{new_line}")#DEBUG
+                        #printQuery(f"0{dict[orderedQuery]}{new_line}")
                     case -1:
-                        print(f"tried adding key {orderedQuery} but it contains non alphabet characters{new_line}")
+                        print(f"tried adding {query} as key but it contains non alphabet characters{new_line}")
                 #print(f"No words can be made from {query}")
-            print(f"Enter another set to test for or enter q to quit")
+            print(f"Test another set of letters or enter q to quit")
     #print("===============end===============") #DEBUG PRINT
 if __name__ == "__main__":
     main()
